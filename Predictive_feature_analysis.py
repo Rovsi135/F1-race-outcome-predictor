@@ -2,6 +2,8 @@ import fastf1 as f1
 from matplotlib import pyplot as plt
 import pandas as pd
 import seaborn as sns
+from sklearn.linear_model import LinearRegression                 
+
 
 
 # session = f1.get_session(2024, "Japan", "Qualifying")
@@ -12,11 +14,14 @@ Q_session = f1.get_session(2024, "Monza", "Q")
 Q_session.load(telemetry=False, laps=False, weather=False)
 df_qualifying = Q_session.results[["Abbreviation", "Position"]]
 df_qualifying.rename(columns={"Position" : "QPosition"}, inplace = True)
+print(Q_session.date)
 
 #Race Session Load
 R_session = f1.get_session(2024, "Monza", "Race")
 R_session.load(telemetry=False, laps=False, weather=False)
 df_Race = R_session.results[["TeamName", "Abbreviation", "Position", "Status"]]
+print(R_session.results["GridPosition"])
+print(Q_session.results["Position"])
 
 #Combined DataFrame
 df_mixed = pd.merge(df_Race, df_qualifying, on='Abbreviation')
